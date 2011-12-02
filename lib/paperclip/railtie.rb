@@ -28,8 +28,6 @@ module Paperclip
         ActiveRecord::ConnectionAdapters::Table.send(:include, Paperclip::Schema)
         ActiveRecord::ConnectionAdapters::TableDefinition.send(:include, Paperclip::Schema)
       end
-
-      File.send(:include, Paperclip::Upfile)
     end
   end
 end

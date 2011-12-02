@@ -29,8 +29,6 @@ require 'erb'
 require 'digest'
 require 'tempfile'
 require 'paperclip/version'
-require 'paperclip/upfile'
-require 'paperclip/iostream'
 require 'paperclip/geometry'
 require 'paperclip/processor'
 require 'paperclip/thumbnail'
@@ -42,6 +40,7 @@ require 'paperclip/storage'
 require 'paperclip/callback_compatibility'
 require 'paperclip/missing_attachment_styles'
 require 'paperclip/railtie'
+require 'mime/types'
 require 'logger'
 require 'cocaine'
 
@@ -76,6 +75,10 @@ module Paperclip
 
     def interpolates key, &block
       Paperclip::Interpolations[key] = block
+    end
+
+    def io_adapters
+      @io_adapters ||= Paperclip::AdapterRegistry.new
     end
 
     # The run method takes the name of a binary to run, the arguments to that binary
@@ -486,3 +489,12 @@ module Paperclip
   end
 
 end
+
+# This stuff needs to be run after Paperclip is defined.
+require 'paperclip/io_adapters/registry'
+require 'paperclip/io_adapters/identity_adapter'
+require 'paperclip/io_adapters/file_adapter'
+require 'paperclip/io_adapters/stringio_adapter'
+require 'paperclip/io_adapters/nil_adapter'
+require 'paperclip/io_adapters/attachment_adapter'
+require 'paperclip/io_adapters/uploaded_file_adapter'

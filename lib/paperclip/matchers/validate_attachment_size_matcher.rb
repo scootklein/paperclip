@@ -73,10 +73,12 @@ module Paperclip
         end
 
         def lower_than_low?
+          return true if @low == 0
           not passes_validation_with_size(@low - 1)
         end
 
         def higher_than_low?
+          return true if @low == 0
           passes_validation_with_size(@low + 1)
         end
 
