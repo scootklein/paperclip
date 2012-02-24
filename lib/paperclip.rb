@@ -55,6 +55,7 @@ require 'paperclip/helpers'
 require 'mime/types'
 require 'logger'
 require 'cocaine'
+require 'open-uri'
 
 require 'paperclip/railtie' if defined?(Rails)
 
@@ -197,6 +198,11 @@ module Paperclip
       end
 
       define_method "#{name}=" do |file|
+        attachment_for(name).assign(file)
+      end
+
+      define_method "#{name}_url=" do |url|
+        file = open(url)
         attachment_for(name).assign(file)
       end
 
