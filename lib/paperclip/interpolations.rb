@@ -28,6 +28,7 @@ module Paperclip
     # You can pass a method name on your record as a symbol, which should turn
     # an interpolation pattern for Paperclip to use.
     def self.interpolate pattern, *args
+      pattern = pattern.call if pattern.respond_to?(:call)
       pattern = args.first.instance.send(pattern) if pattern.kind_of? Symbol
       all.reverse.inject(pattern) do |result, tag|
         result.gsub(/:#{tag}/) do |match|
