@@ -137,6 +137,7 @@ module Paperclip
             @s3_server_side_encryption = @options[:s3_server_side_encryption].to_s.upcase
           end
 
+          @options[:url] = @options[:url].call(self) if @options[:url].respond_to?(:call)
           unless @options[:url].to_s.match(/^:s3.*url$/) || @options[:url] == ":asset_host"
             @options[:path] = @options[:path].call(self) if @options[:path].respond_to?(:call)
             @options[:path] = @options[:path].gsub(/:url/, @options[:url]).gsub(/^:rails_root\/public\/system/, '')
