@@ -203,7 +203,7 @@ module Paperclip
 
       define_method "#{name}_url=" do |url|
         file = open(url)
-        file.original_filename = url.split("/").last
+        file.original_filename = url.split("/").last if file.respond_to?(:original_filename)
         attachment_for(name).assign(file)
       end
 
