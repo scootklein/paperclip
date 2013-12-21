@@ -202,6 +202,7 @@ module Paperclip
       end
 
       define_method "#{name}_url=" do |url|
+        raise "url:#{url} does not look like a url" unless url.match(/^https?:\/\//)
         file = open(url)
         file.original_filename = url.split("/").last if file.respond_to?(:original_filename=)
         attachment_for(name).assign(file)
