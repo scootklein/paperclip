@@ -15,7 +15,7 @@ module Paperclip
     def geometry_string
       begin
         silence_stream(STDERR) do
-          Paperclip.run("identify", "-format '%wx%h,%[exif:orientation]' :file", :file => "#{path}[0]")
+          Paperclip.run("identify", "-format '%wx%h,1' :file", :file => "#{path}[0]")
         end
       rescue Cocaine::ExitStatusError
         ""
